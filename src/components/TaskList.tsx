@@ -22,26 +22,26 @@ export function TaskList() {
         isComplete: false,
       };
 
-      setTasks([...tasks, newTask]);
-
+      setTasks((oldState) => [...oldState, newTask]);
       setNewTaskTitle("");
     }
   }
 
   function handleToggleTaskCompletion(id: number) {
-    let newTasks = [...tasks];
-
-    newTasks.forEach((task) => {
-      if (task.id === id) {
-        task.isComplete = !task.isComplete;
-      }
-    });
+    const newTasks = tasks.map((task) =>
+      task.id === id
+        ? {
+            ...task,
+            isComplete: !task.isComplete,
+          }
+        : task
+    );
 
     setTasks(newTasks);
   }
 
   function handleRemoveTask(id: number) {
-    let newTasks = tasks.filter((task) => task.id !== id);
+    const newTasks = tasks.filter((task) => task.id !== id);
 
     setTasks(newTasks);
   }
